@@ -1,4 +1,4 @@
-# Bonus Assignment for mada@FHNW in SS19  
+# Bonus Assignment (Huffman Code) for mada@FHNW in SS19  
 
 
 
