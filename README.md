@@ -5,8 +5,8 @@
 
 This program is able to:
 
-- [ ] Read in ASCII text file  
-- [ ] Create frequency table for the symbols in the file
+- [x] Read in ASCII text file  
+- [x] Create frequency table for the symbols in the file
 - [ ] Construct Huffman code from this table
 - [ ] Store Huffman table in external file _dec_tab.txt_
 - [ ] Convert read in string into bit string using huffman code
