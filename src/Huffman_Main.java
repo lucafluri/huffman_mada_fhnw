@@ -42,9 +42,13 @@ public class Huffman_Main {
 
         while(queue.size()!=1){
             left = queue.poll();
+            System.out.println("Left: " + left);
             right = queue.poll();
+            System.out.println("Right: " + right);
             top = new Node(left, right);
             queue.add(top);
+
+            System.out.println(queue);
         }
         //"Tree" finished, we have top node of tree
 
@@ -59,8 +63,8 @@ public class Huffman_Main {
         if(top.left == null && top.right==null){
             map.put(top.value, code);
         }else{
-            getCodes(map, code + "0", top.left);
-            getCodes(map, code + "1", top.right);
+            getCodes(map, code + "1", top.left);
+            getCodes(map, code + "0", top.right);
         }
 
     }
