@@ -1,7 +1,4 @@
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.TreeMap;
@@ -41,26 +38,53 @@ public class Huffman_Main {
             if(i>0){ //frequency not 0
                 freqMap.put(freqtable[i], i);
             }
+        } //frequency table generated
+
+        Node left = new Node;
+        Node right = null;
+        while(freqMap.size()!=0){
+            if(left==null || right==null){
+                int Key = freqMap.firstEntry().getKey();
+                String Value = String.valueOf((char)(int)freqMap.firstEntry().getValue());
+
+                left = new Node(freqMap.firstEntry().getKey(), freqMap.firstEntry().getValue().toString());
+                freqMap.remove(Key);
+
+                Key = freqMap.firstEntry().getKey();
+                Value = String.valueOf((char)(int)freqMap.firstEntry().getValue());
+
+                right = new Node(freqMap.firstEntry().getKey(), freqMap.firstEntry().getValue().toString());
+                freqMap.remove(Key);
+            }
         }
 
     }
 
+
 }
 
-class Node{
-    Node left = null;
-    Node right = null;
-    String value = "";
-    int freq = 0;
+class Node {
+    static Node left = null;
+    static Node right = null;
+    static String value = "";
+    static int freq = 0;
 
-    public void Node(int freq, String value){ //Constructor for bottom Nodes
-        this.freq = freq;
-        this.value = value;
+    public Node(int _freq, String _value){ //Constructor for bottom Nodes
+        freq = _freq;
+        value = _value;
     }
 
-    public void Node(Node left, Node right){ //Constructor for all the upper Nodes with children
-        this.left = left;
-        this.right = right;
+    public Node(Node _left, Node _right){ //Constructor for all the upper Nodes with children
+        if(_left.freq > _right.freq){ //Correct binary tree order
+            right = _left;
+            left = _right;
+        }else {
+            left = _left;
+            right = _right;
+        }
+
+        value = _left.value + _right.value;
+        freq = _left.freq + _right.freq;
 
 
     }
