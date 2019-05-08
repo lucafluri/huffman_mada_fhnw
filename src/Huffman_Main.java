@@ -1,13 +1,13 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.TreeMap;
+import java.util.*;
 
 
 public class Huffman_Main {
 
     public static void main(String[] args) throws IOException {
-        createFreqTable(readASCIIFile("ascii.txt"));
+        createHuffmanCode(createFreqTable(readASCIIFile("ascii.txt")));
 
     }
 
@@ -26,36 +26,41 @@ public class Huffman_Main {
             }
         }
 
-
-        for(int i : freqTable){System.out.print(i);}
+        //for(int i : freqTable){System.out.print(i);}
 
         return freqTable;
     }
 
-    public static void createHuffmanCode(int[] freqtable){
-        TreeMap<Integer, Integer> freqMap = new TreeMap();
-        for(int i : freqtable){
-            if(i>0){ //frequency not 0
-                freqMap.put(freqtable[i], i);
-            }
+    public static void createHuffmanCode(int[] freqTable){
+        PriorityQueue<Node> queue = new PriorityQueue<>((o1, o2) -> (o1.freq < o2.freq) ? -1 : 1); // sorted frequency table with (freq, char int)
+        TreeMap<String, String> map = new TreeMap<>(); //Huffmancode table
+        for(char i=0; i<freqTable.length; i++){
+            if((freqTable[i] > 0) ?  queue.add(new Node(freqTable[i], String.valueOf(i))) : false);
         } //frequency table generated
 
-        Node left = new Node;
-        Node right = null;
-        while(freqMap.size()!=0){
-            if(left==null || right==null){
-                int Key = freqMap.firstEntry().getKey();
-                String Value = String.valueOf((char)(int)freqMap.firstEntry().getValue());
+        Node left, right, top = null;
 
-                left = new Node(freqMap.firstEntry().getKey(), freqMap.firstEntry().getValue().toString());
-                freqMap.remove(Key);
+        while(queue.size()!=1){
+            left = queue.poll();
+            right = queue.poll();
+            top = new Node(left, right);
+            queue.add(top);
+        }
+        //"Tree" finished, we have top node of tree
 
-                Key = freqMap.firstEntry().getKey();
-                Value = String.valueOf((char)(int)freqMap.firstEntry().getValue());
+        getCodes(map, "", top);
 
-                right = new Node(freqMap.firstEntry().getKey(), freqMap.firstEntry().getValue().toString());
-                freqMap.remove(Key);
-            }
+        System.out.println(map);
+
+
+    }
+
+    public static void getCodes(TreeMap<String, String> map, String code, Node top){
+        if(top.left == null && top.right==null){
+            map.put(top.value, code);
+        }else{
+            getCodes(map, code + "0", top.left);
+            getCodes(map, code + "1", top.right);
         }
 
     }
@@ -63,29 +68,40 @@ public class Huffman_Main {
 
 }
 
-class Node {
-    static Node left = null;
-    static Node right = null;
-    static String value = "";
-    static int freq = 0;
+class Node implements Comparable<Node>{
+    Node left = null;
+    Node right = null;
+    String value;
+    int freq;
 
     public Node(int _freq, String _value){ //Constructor for bottom Nodes
-        freq = _freq;
-        value = _value;
+        this.freq = _freq;
+        this.value = _value;
     }
 
     public Node(Node _left, Node _right){ //Constructor for all the upper Nodes with children
         if(_left.freq > _right.freq){ //Correct binary tree order
-            right = _left;
-            left = _right;
+            this.right = _left;
+            this.left = _right;
         }else {
-            left = _left;
-            right = _right;
+            this.left = _left;
+            this.right = _right;
         }
 
-        value = _left.value + _right.value;
-        freq = _left.freq + _right.freq;
-
-
+        this.value = _left.value + _right.value;
+        this.freq = _left.freq + _right.freq;
     }
+
+
+    @Override
+    public int compareTo(Node o) {
+        return this.freq - o.freq;
+    }
+
+
+    @Override
+    public String toString(){
+        return this.freq + ": " + this.value;
+    }
+
 }
