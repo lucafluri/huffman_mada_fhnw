@@ -13,5 +13,5 @@ This program is able to:
 - [x] Append a 1 and 0s until length is divisible by 8
 - [x] Convert bit string to byte array
 - [x] Store byte array in _output.dat_
-- [ ] Decode  from external files and save decoded string in _decompress.txt_
-- [ ] Decode _output-mada.dat_ with _dec-mada.txt_
+- [x] Decode  from external files and save decoded string in _decompress.txt_
+- [x] Decode _output-mada.dat_ with _dec-mada.txt_

@@ -11,15 +11,17 @@ public class Huffman_Main {
     public static void main(String[] args) throws IOException {
         String text = readASCIIFile("ascii.txt");
         TreeMap<String, String> huffmanTable = createHuffmanCode(createFreqTable(text));
-        System.out.println(huffmanTable);
+        //System.out.println(huffmanTable);
         encode(text, huffmanTable);
+
 
         decode();
     }
 
     public static String readASCIIFile(String filepath) throws IOException {
-        String input = Files.readAllLines(Paths.get(filepath)).get(0);
-        System.out.println(input);
+        String input = new String(Files.readAllBytes(Paths.get(filepath)));
+        //System.out.println(input);
+        System.out.println("Reading File...");
 
         return input;
     }
@@ -97,7 +99,7 @@ public class Huffman_Main {
         Files.write(Paths.get(path), toWrite.getBytes());
     }
 
-    public static void encode(String text, TreeMap<String, String> table) throws FileNotFoundException, IOException{
+    public static void encode(String text, TreeMap<String, String> table) throws IOException{
         String bitString = "";
 
         for(char c : text.toCharArray()){
@@ -110,12 +112,15 @@ public class Huffman_Main {
 
         //System.out.println(bitString);
 
-        //create bytearray
-        byte[] bytearray = bitString.getBytes();
-        //System.out.println(bytearray);
+        //create byteArray
+        byte[] byteArray = new byte[bitString.length()/8];
+        for(int i = 0; i<bitString.length()/8;i++){
+            byteArray[i] = (byte) Integer.parseInt(bitString.substring(i*8, (i+1)*8), 2);
+        }
+        //System.out.println(byteArray);
 
         FileOutputStream fos = new FileOutputStream("output.dat");
-        fos.write(bytearray);
+        fos.write(byteArray);
         fos.close();
 
     }
@@ -129,8 +134,14 @@ public class Huffman_Main {
 
         //bitString with ending 1000*
 
-        String bitString = new String(bFile);
+
+        String bitString = "";
         //remove tailing 0s and 1
+        //System.out.println(bitString);
+        for(byte b : bFile){
+            bitString += Integer.toBinaryString((b & 0xFF)+0x100).substring(1); // Wasted too much time here. Thanks Stackoverflow^^
+        }
+
         bitString = bitString.substring(0, bitString.lastIndexOf("1"));
         System.out.println(bitString);
 
@@ -147,8 +158,25 @@ public class Huffman_Main {
 
         System.out.println("read Table: " + table);
 
-        for(int i = 0; i<bitString.length(); i++);
-            if(bitString.substring(0, i))
+        String decoded = "";
+        int a = 0;
+        for(int i = 0; i<=bitString.length(); i++) {
+            for(Map.Entry<String, String> entry: table.entrySet()){
+                String substring = bitString.substring(a, i);
+                if(entry.getValue().equals(substring)){
+                    decoded += entry.getKey();
+
+                    a = i;
+                }
+            }
+
+        }
+
+        System.out.println(decoded);
+
+
+        //Write decoded File
+        Files.write(Paths.get("decompress.txt"), decoded.getBytes());
 
 
     }
