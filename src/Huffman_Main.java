@@ -12,16 +12,28 @@ public class Huffman_Main {
     private static String decomprPath = "decompress.txt";   // Path to decompressed File
 
     public static void main(String[] args) throws IOException {
+
         compress(); // creates freq table and creates a huffman tree which is used to compress/encode the original text
                     // Both the Huffman table and the compressed text are stored.
 
         decompress(); // Decompresses the specified file with the specified table and saves the result.
     }
 
+    /**
+     * Reads a ASCII File and returns its contents as string
+     * @param filepath of file
+     * @return String of its contents
+     * @throws IOException
+     */
     public static String readASCIIFile(String filepath) throws IOException {
         return new String(Files.readAllBytes(Paths.get(filepath)));
     }
 
+    /**
+     * Creates a frequency table from given string
+     * @param input String
+     * @return int[] where index corresponds to character value and the element is its frequency
+     */
     public static int[] createFreqTable(String input){
         System.out.println("Creating Frequency Table...");
 
@@ -34,6 +46,12 @@ public class Huffman_Main {
         return freqTable;
     }
 
+    /**
+     * Creates the Huffman Code and saves it to a file.
+     * @param freqTable which has been generated before
+     * @return TreeMap with characters and Huffman Code
+     * @throws IOException
+     */
     public static TreeMap<String, String> createHuffmanCode(int[] freqTable) throws IOException{
         System.out.println("Creating Huffman Tree...");
 
@@ -58,10 +76,14 @@ public class Huffman_Main {
         saveHuffman(map); //Save the generated Huffman Code
 
         return map;
-
-
     }
 
+    /**
+     * Fills recursively the Huffman Tree Map
+     * @param map Huffman Tree Map
+     * @param code current iteration of the code
+     * @param top current top node
+     */
     public static void getCodes(TreeMap<String, String> map, String code, Node top){
         if(top.left == null && top.right==null){ //This means the node is a leaf node and we have found a character.
             map.put(top.value, code); //Add the newly found character and huffman code pair to the map.
@@ -72,6 +94,11 @@ public class Huffman_Main {
 
     }
 
+    /**
+     * Saves the Huffman Table to file
+     * @param table Huffman Table as a TreeMap
+     * @throws IOException
+     */
     public static void saveHuffman(TreeMap<String, String> table) throws IOException {
         String toWrite = "";
         TreeMap<String, String> map = (TreeMap) table.clone();
@@ -87,6 +114,10 @@ public class Huffman_Main {
         Files.write(Paths.get(tablePath), toWrite.getBytes()); //saves the Huffman Table to the specified file path
     }
 
+    /**
+     * Compresses  Text (Filepath specified as main class variables!)
+     * @throws IOException
+     */
     public static void compress() throws IOException{
         System.out.println("COMPRESSING:\nReading File " + inputPath + "...");
         String bitString = "";
@@ -95,22 +126,19 @@ public class Huffman_Main {
         System.out.println("Compressing Text...");
 
         for(char c : text.toCharArray()){
-            bitString += table.get(String.valueOf(c));
+            bitString += table.get(String.valueOf(c)); //Encodes each character of the text with the huffman table
         }
         bitString += "1";
-        while(bitString.length() % 8 != 0){
+        while(bitString.length() % 8 != 0){ // Appends a 1 and tailing 0s until divisible by 8
             bitString += "0";
         }
 
-        //System.out.println(bitString);
-
         //create byteArray
         byte[] byteArray = new byte[bitString.length()/8];
-        for(int i = 0; i<bitString.length()/8;i++){
-            byteArray[i] = (byte) Integer.parseInt(bitString.substring(i*8, (i+1)*8), 2);
+        for(int i = 0; i<bitString.length()/8;i++){ //saving bitstring as byte array
+            byteArray[i] = (byte) Integer.parseInt(bitString.substring(i*8, (i+1)*8), 2); //parsing int base 2 -> binary number.
         }
         //System.out.println(byteArray);
-
 
         System.out.println("Saving Compressed Text to " + comprPath + "...\n");
         FileOutputStream fos = new FileOutputStream(comprPath);
@@ -119,26 +147,25 @@ public class Huffman_Main {
 
     }
 
+    /**
+     * Decompresses file specified as main class variable.
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public static void decompress() throws FileNotFoundException, IOException{
-        File file = new File(comprPath);
         System.out.println("DECOMPRESSING:\nDecompressing " + comprPath + "...");
+        File file = new File(comprPath);
         byte[] bFile = new byte[(int) file.length()];
         FileInputStream fis = new FileInputStream(file);
         fis.read(bFile);
         fis.close();
 
-        //bitString with ending 1000*
-
-
         String bitString = "";
-        //remove tailing 0s and 1
-        //System.out.println(bitString);
-        for(byte b : bFile){
+        for(byte b : bFile){ // Converting every byte from the bytearray to a  binarystring. and adding it to bitstring
             bitString += Integer.toBinaryString((b & 0xFF)+0x100).substring(1); // Wasted too much time here. Thanks Stackoverflow^^
         }
 
-        bitString = bitString.substring(0, bitString.lastIndexOf("1"));
-        //System.out.println(bitString);
+        bitString = bitString.substring(0, bitString.lastIndexOf("1")); //remove tailing 0s and 1
 
         String decTable = readASCIIFile(tablePath);
         System.out.println("Reading Huffman Table from " + tablePath + "...");
@@ -146,7 +173,7 @@ public class Huffman_Main {
         TreeMap<String, String> table = new TreeMap<>();
         String[] mappings = decTable.split("-");
 
-        for(String mapping : mappings){
+        for(String mapping : mappings){ //Splits the saved huffman table and converts it back to a map.
             String c = String.valueOf((char) Integer.parseInt(mapping.split(":")[0]));
             String v = mapping.split(":")[1];
             table.put(c, v);
@@ -156,45 +183,51 @@ public class Huffman_Main {
 
         String decoded = "";
         int a = 0;
-        for(int i = 0; i<=bitString.length(); i++) {
+        for(int i = 0; i<=bitString.length(); i++) { //Actual decompressing
             for(Map.Entry<String, String> entry: table.entrySet()){
                 String substring = bitString.substring(a, i);
-                if(entry.getValue().equals(substring)){
+                if(entry.getValue().equals(substring)){ //If current substring exists as a value in the map, we add its key (=character) to the decompressed string. All mappings are completely unique and no code exists twice.
                     decoded += entry.getKey();
-
-                    a = i;
+                    a = i; //adjust starting position of substring
                 }
             }
 
         }
 
-        //System.out.println(decoded);
-
-
         //Write decoded File
         Files.write(Paths.get(decomprPath), decoded.getBytes());
         System.out.println("Decompressed File saved to: " + decomprPath);
 
-
     }
-
-
 
 
 }
 
+/**
+ * Tree Node Class
+ */
 class Node{
     Node left = null;
     Node right = null;
     String value;
     int freq;
 
+    /**
+     * Constructor for leaf nodes
+     * @param _freq
+     * @param _value
+     */
     public Node(int _freq, String _value){ //Constructor for bottom Nodes
         this.freq = _freq;
         this.value = _value;
     }
 
-    public Node(Node _left, Node _right){ //Constructor for all the upper Nodes with children
+    /**
+     * Constructor for parent nodes
+     * @param _left
+     * @param _right
+     */
+    public Node(Node _left, Node _right){ //Constructor for all the parent Nodes with children
         if(_left.freq > _right.freq){ //Correct binary tree order
             this.right = _left;
             this.left = _right;
@@ -203,8 +236,8 @@ class Node{
             this.right = _right;
         }
 
-        this.value = _left.value + _right.value;
-        this.freq = _left.freq + _right.freq;
+        this.value = _left.value + _right.value; //Each Parent Node has the sum of its childrens value as value (character)
+        this.freq = _left.freq + _right.freq; //Sum of children's frequency
     }
 
     @Override
