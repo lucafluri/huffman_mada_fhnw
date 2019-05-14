@@ -25,7 +25,7 @@ public class Huffman_Main {
      * @return String of its contents
      * @throws IOException
      */
-    public static String readASCIIFile(String filepath) throws IOException {
+    private static String readASCIIFile(String filepath) throws IOException {
         return new String(Files.readAllBytes(Paths.get(filepath)));
     }
 
@@ -34,7 +34,7 @@ public class Huffman_Main {
      * @param input String
      * @return int[] where index corresponds to character value and the element is its frequency
      */
-    public static int[] createFreqTable(String input){
+    private static int[] createFreqTable(String input){
         System.out.println("Creating Frequency Table...");
 
         int[] freqTable = new int[256]; //ASCII Table Size = 256, index is used as char identifier and elements as frequency.
@@ -52,7 +52,7 @@ public class Huffman_Main {
      * @return TreeMap with characters and Huffman Code
      * @throws IOException
      */
-    public static TreeMap<String, String> createHuffmanCode(int[] freqTable) throws IOException{
+    private static TreeMap<String, String> createHuffmanCode(int[] freqTable) throws IOException{
         System.out.println("Creating Huffman Tree...");
 
         PriorityQueue<Node> queue = new PriorityQueue<>((o1, o2) -> (o1.freq < o2.freq) ? -1 : 1); // sorted frequency table with (freq, char int)
@@ -84,7 +84,7 @@ public class Huffman_Main {
      * @param code current iteration of the code
      * @param top current top node
      */
-    public static void getCodes(TreeMap<String, String> map, String code, Node top){
+    private static void getCodes(TreeMap<String, String> map, String code, Node top){
         if(top.left == null && top.right==null){ //This means the node is a leaf node and we have found a character.
             map.put(top.value, code); //Add the newly found character and huffman code pair to the map.
         }else{
@@ -99,37 +99,38 @@ public class Huffman_Main {
      * @param table Huffman Table as a TreeMap
      * @throws IOException
      */
-    public static void saveHuffman(TreeMap<String, String> table) throws IOException {
-        String toWrite = "";
+    private static void saveHuffman(TreeMap<String, String> table) throws IOException {
+        StringBuilder toWrite = new StringBuilder(); //Using Stringbuilder in the program because it doesn't copy the string in every concatenation. Increases compressing speed massively!
         TreeMap<String, String> map = (TreeMap) table.clone();
 
         System.out.println("Saving Huffman Tree to " + tablePath + "...");
 
         int size = map.size();
         for(int i = 0; i<size; i++){ //Saving Huffman Table according to Assignment
-            toWrite += Integer.valueOf(map.firstEntry().getKey().toCharArray()[0]) + ":";
-            toWrite += map.firstEntry().getValue() + "-"; //The last "-" is ignored for simplicity
+            toWrite.append(Integer.valueOf(map.firstEntry().getKey().toCharArray()[0])).append(":");
+            toWrite.append(map.firstEntry().getValue()).append("-"); //The last "-" is ignored for simplicity
             map.pollFirstEntry();
         }
-        Files.write(Paths.get(tablePath), toWrite.getBytes()); //saves the Huffman Table to the specified file path
+        Files.write(Paths.get(tablePath), toWrite.toString().getBytes()); //saves the Huffman Table to the specified file path
     }
 
     /**
      * Compresses  Text (Filepath specified as main class variables!)
      * @throws IOException
      */
-    public static void compress() throws IOException{
+    private static void compress() throws IOException{
         System.out.println("COMPRESSING:\nReading File " + inputPath + "...");
-        String bitString = "";
+        StringBuilder bitString = new StringBuilder();
         String text = readASCIIFile(inputPath);
         TreeMap<String, String> table = createHuffmanCode(createFreqTable(text)); //creates the huffman table
         System.out.println("Compressing Text...");
 
-        float count = 0;
-        float progr = 0;
-        float oldprogr = 0;
+        float count, progr, oldprogr; //progress Indicator
+        count = progr = oldprogr = 0;
+
         for(char c : text.toCharArray()){
-            bitString += table.get(String.valueOf(c)); //Encodes each character of the text with the huffman table
+            bitString.append(table.get(String.valueOf(c))); //Encodes each character of the text with the huffman table
+            //Progress Indicator
             progr = (int) ((++count / text.toCharArray().length) * 100);
             if (progr % 10 == 0 && progr != oldprogr) {
                 System.out.print((int) progr + "%\r");
@@ -137,9 +138,9 @@ public class Huffman_Main {
             oldprogr = progr;
 
         }
-        bitString += "1";
+        bitString.append("1");
         while(bitString.length() % 8 != 0){ // Appends a 1 and tailing 0s until divisible by 8
-            bitString += "0";
+            bitString.append("0");
         }
 
         //create byteArray
@@ -161,7 +162,7 @@ public class Huffman_Main {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public static void decompress() throws FileNotFoundException, IOException{
+    private static void decompress() throws FileNotFoundException, IOException{
         System.out.println("DECOMPRESSING:\nDecompressing " + comprPath + "...");
         File file = new File(comprPath);
         byte[] bFile = new byte[(int) file.length()];
@@ -169,12 +170,14 @@ public class Huffman_Main {
         fis.read(bFile);
         fis.close();
 
-        String bitString = "";
-        float count = 0;
-        float progr = 0;
-        float oldprogr = 0;
+        StringBuilder bitString = new StringBuilder();
+
+        float count, progr, oldprogr; // Progress Indicator
+        count = progr = oldprogr = 0;
+
         for(byte b : bFile){ // Converting every byte from the bytearray to a  binarystring. and adding it to bitstring
-            bitString += Integer.toBinaryString((b & 0xFF)+0x100).substring(1); // Wasted too much time here. Thanks Stackoverflow^^
+            bitString.append(Integer.toBinaryString((b & 0xFF) + 0x100).substring(1)); // Wasted too much time here. Thanks Stackoverflow^^
+            //Progress Indicator
             progr = (int) ((++count / bFile.length) * 100);
             if (progr % 10 == 0 && progr != oldprogr) {
                 System.out.print((int) progr + "%\r");
@@ -182,7 +185,7 @@ public class Huffman_Main {
             oldprogr = progr;
         }
 
-        bitString = bitString.substring(0, bitString.lastIndexOf("1")); //remove tailing 0s and 1
+        bitString = new StringBuilder(bitString.substring(0, bitString.lastIndexOf("1"))); //remove tailing 0s and 1
 
         String decTable = readASCIIFile(tablePath);
         System.out.println("Reading Huffman Table from " + tablePath + "...");
@@ -198,13 +201,13 @@ public class Huffman_Main {
 
         //System.out.println("read Table: " + table);
 
-        String decoded = "";
+        StringBuilder decoded = new StringBuilder();
         int a = 0;
         for(int i = 0; i<=bitString.length(); i++) { //Actual decompressing
             for(Map.Entry<String, String> entry: table.entrySet()){
                 String substring = bitString.substring(a, i);
                 if(entry.getValue().equals(substring)){ //If current substring exists as a value in the map, we add its key (=character) to the decompressed string. All mappings are completely unique and no code exists twice.
-                    decoded += entry.getKey();
+                    decoded.append(entry.getKey());
                     a = i; //adjust starting position of substring
                 }
             }
@@ -212,7 +215,7 @@ public class Huffman_Main {
         }
 
         //Write decoded File
-        Files.write(Paths.get(decomprPath), decoded.getBytes());
+        Files.write(Paths.get(decomprPath), decoded.toString().getBytes());
         System.out.println("Decompressed File saved to " + decomprPath);
 
     }
