@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/Huffman_Main.java" line="203" />
+    <bookmark url="file://$PROJECT_DIR$/src/Huffman_Main.java" line="220" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4957c0e3-cfdb-46c4-b733-ae3f9c45f425" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ascii.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ascii.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dec_tab.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dec_tab.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/decompress.txt" beforeDir="false" afterPath="$PROJECT_DIR$/decompress.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/huffman_mada/Huffman_Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/huffman_mada/Huffman_Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/huffman_mada/Node.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/huffman_mada/Node.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output.dat" beforeDir="false" afterPath="$PROJECT_DIR$/output.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Huffman_Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Huffman_Main.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -38,22 +34,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Huffman_Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="30" lean-forward="true" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
+            <state relative-caret-position="374">
+              <caret line="127" column="24" lean-forward="true" selection-start-line="127" selection-start-column="24" selection-end-line="127" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#9648#9649#0" expanded="true" />
-                <element signature="e#9700#9701#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/output.dat">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2244">
-              <caret line="132" column="109" selection-start-line="132" selection-start-column="109" selection-end-line="132" selection-end-column="109" />
             </state>
           </provider>
         </entry>
@@ -61,7 +46,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ascii.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11203">
+            <state relative-caret-position="5239">
               <caret line="659" column="85" selection-start-line="659" selection-start-column="85" selection-end-line="659" selection-end-column="85" />
             </state>
           </provider>
@@ -71,7 +56,7 @@
         <entry file="file://$PROJECT_DIR$/dec_tab.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="104" lean-forward="true" selection-start-column="104" selection-end-column="104" />
+              <caret column="24" lean-forward="true" selection-start-column="24" selection-end-column="67" />
             </state>
           </provider>
         </entry>
@@ -79,7 +64,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/decompress.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
+            <state relative-caret-position="-10639">
               <caret line="1" selection-start-line="1" selection-end-line="1" />
             </state>
           </provider>
@@ -121,7 +106,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -139,10 +123,11 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557411998841" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557821176514" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
@@ -197,7 +182,7 @@
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11513859" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.118336886" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -206,7 +191,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30010384" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.30010384" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997923" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -241,29 +226,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dec_path.txt">
+    <entry file="file://$PROJECT_DIR$/dec_path.txt" />
+    <entry file="file://$PROJECT_DIR$/output.dat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="904">
+          <caret line="132" column="109" selection-start-line="132" selection-start-column="109" selection-end-line="132" selection-end-column="109" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/output-mada.dat">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/decompress.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dec_tab.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="104" lean-forward="true" selection-start-column="104" selection-end-column="104" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ascii.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11203">
-          <caret line="659" column="85" selection-start-line="659" selection-start-column="85" selection-end-line="659" selection-end-column="85" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -275,21 +247,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/output.dat">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/lang/StringBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2244">
-          <caret line="132" column="109" selection-start-line="132" selection-start-column="109" selection-end-line="132" selection-end-column="109" />
+        <state relative-caret-position="216">
+          <caret line="134" column="25" selection-start-line="134" selection-start-column="25" selection-end-line="134" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/decompress.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-10639">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ascii.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5239">
+          <caret line="659" column="85" selection-start-line="659" selection-start-column="85" selection-end-line="659" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dec_tab.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="24" lean-forward="true" selection-start-column="24" selection-end-column="67" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Huffman_Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="30" lean-forward="true" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
+        <state relative-caret-position="374">
+          <caret line="127" column="24" lean-forward="true" selection-start-line="127" selection-start-column="24" selection-end-line="127" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9648#9649#0" expanded="true" />
-            <element signature="e#9700#9701#0" expanded="true" />
           </folding>
         </state>
       </provider>

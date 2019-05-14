@@ -125,8 +125,17 @@ public class Huffman_Main {
         TreeMap<String, String> table = createHuffmanCode(createFreqTable(text)); //creates the huffman table
         System.out.println("Compressing Text...");
 
+        float count = 0;
+        float progr = 0;
+        float oldprogr = 0;
         for(char c : text.toCharArray()){
             bitString += table.get(String.valueOf(c)); //Encodes each character of the text with the huffman table
+            progr = Math.round((++count / text.toCharArray().length) * 100);
+            if (progr % 10 == 0 && progr != oldprogr) {
+                System.out.println(progr + "%");
+            }
+            oldprogr = progr;
+
         }
         bitString += "1";
         while(bitString.length() % 8 != 0){ // Appends a 1 and tailing 0s until divisible by 8
@@ -161,8 +170,16 @@ public class Huffman_Main {
         fis.close();
 
         String bitString = "";
+        float count = 0;
+        float progr = 0;
+        float oldprogr = 0;
         for(byte b : bFile){ // Converting every byte from the bytearray to a  binarystring. and adding it to bitstring
             bitString += Integer.toBinaryString((b & 0xFF)+0x100).substring(1); // Wasted too much time here. Thanks Stackoverflow^^
+            progr = Math.round((++count / bFile.length) * 100);
+            if (progr % 10 == 0 && progr != oldprogr) {
+                System.out.println(progr + "%");
+            }
+            oldprogr = progr;
         }
 
         bitString = bitString.substring(0, bitString.lastIndexOf("1")); //remove tailing 0s and 1
