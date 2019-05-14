@@ -13,4 +13,7 @@ This program is able to:
 - [x] Store byte array in _output.dat_
 - [x] Decode  from external files and save decoded string in _decompress.txt_
 - [x] Decode _output-mada.dat_ with _dec-mada.txt_
-
+  
+**Solution by:** 
+- Luca Fluri
+- Philipp Alder

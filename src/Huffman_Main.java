@@ -130,9 +130,9 @@ public class Huffman_Main {
         float oldprogr = 0;
         for(char c : text.toCharArray()){
             bitString += table.get(String.valueOf(c)); //Encodes each character of the text with the huffman table
-            progr = Math.round((++count / text.toCharArray().length) * 100);
+            progr = (int) ((++count / text.toCharArray().length) * 100);
             if (progr % 10 == 0 && progr != oldprogr) {
-                System.out.println(progr + "%");
+                System.out.print((int) progr + "%\r");
             }
             oldprogr = progr;
 
@@ -175,9 +175,9 @@ public class Huffman_Main {
         float oldprogr = 0;
         for(byte b : bFile){ // Converting every byte from the bytearray to a  binarystring. and adding it to bitstring
             bitString += Integer.toBinaryString((b & 0xFF)+0x100).substring(1); // Wasted too much time here. Thanks Stackoverflow^^
-            progr = Math.round((++count / bFile.length) * 100);
+            progr = (int) ((++count / bFile.length) * 100);
             if (progr % 10 == 0 && progr != oldprogr) {
-                System.out.println(progr + "%");
+                System.out.print((int) progr + "%\r");
             }
             oldprogr = progr;
         }
@@ -213,7 +213,7 @@ public class Huffman_Main {
 
         //Write decoded File
         Files.write(Paths.get(decomprPath), decoded.getBytes());
-        System.out.println("Decompressed File saved to: " + decomprPath);
+        System.out.println("Decompressed File saved to " + decomprPath);
 
     }
 
