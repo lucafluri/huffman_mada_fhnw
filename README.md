@@ -17,3 +17,4 @@ This program is able to:
 **Solution by:** 
 - Luca Fluri
 - Philipp Alder
+- Alejandro Garcia
